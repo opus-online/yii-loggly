@@ -22,6 +22,7 @@ In protected/config/main.php in components section add:
                     'inputKey' => '<put here your input key>',
                     'finishRequest' => true,
                     'levels'=>'error, warning',
+                    'tag' => 'staging,php'
                 ),
         ),
     ),

@@ -1,12 +1,13 @@
 <?php
-
 /**
  * Log router for Loggly - Cloud Based Log Management Service
  * @author Alexey Ashurok <work@aotd.ru>
  * @link http://github.com/aotd1/yii-loggly
  * @link http://loggly.com/
  */
-class LogglyRoute extends CLogRoute
+namespace LogglyRoute;
+
+class LogglyRoute extends \CLogRoute
 {
 
     /* @var string */
@@ -16,10 +17,15 @@ class LogglyRoute extends CLogRoute
     public $finishRequest = true;
 
     /* @var string */
-    public $url = 'https://logs.loggly.com/inputs/';
+    public $url = 'https://logs-01.loggly.com/inputs/';
 
     /* @var string */
     public $cert;
+
+    /**
+     * @var string
+     */
+    public $tag;
 
     /* @var resource */
     private $curl;
@@ -27,7 +33,7 @@ class LogglyRoute extends CLogRoute
     public function init()
     {
         if (!is_string($this->inputKey) || strlen($this->inputKey) !== 36) {
-            throw new CException("Loggly key '$this->inputKey' must be a valid 36 character string");
+            throw new \CException("Loggly key '$this->inputKey' must be a valid 36 character string");
         }
         if ($this->cert === null) {
             $this->cert = dirname(__FILE__) . '/cert.pem';
@@ -47,6 +53,20 @@ class LogglyRoute extends CLogRoute
     }
 
     /**
+     * Creates the API url
+     * @return string
+     */
+    private function constructUrl()
+    {
+
+        $url = $this->url . $this->inputKey;
+        if($this->tag) {
+            $url .= '/tag/' . $this->tag . '/';
+        }
+        return $url;
+    }
+
+    /**
      * @return resource
      */
     private function initCurl()
@@ -56,7 +76,7 @@ class LogglyRoute extends CLogRoute
         }
 
         $this->curl = curl_init();
-        curl_setopt($this->curl, CURLOPT_URL, $this->url . $this->inputKey);
+        curl_setopt($this->curl, CURLOPT_URL, $this->constructUrl());
         curl_setopt($this->curl, CURLOPT_HTTPHEADER, array('Content-type: application/json'));
         curl_setopt($this->curl, CURLOPT_TIMEOUT, 10);
         curl_setopt($this->curl, CURLOPT_RETURNTRANSFER, 1);
