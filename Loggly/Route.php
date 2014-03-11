@@ -5,9 +5,9 @@
  * @link http://github.com/aotd1/yii-loggly
  * @link http://loggly.com/
  */
-namespace LogglyRoute;
+namespace OpusOnline\Loggly;
 
-class LogglyRoute extends \CLogRoute
+class Route extends \CLogRoute
 {
 
     /* @var string */
