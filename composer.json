@@ -12,6 +12,11 @@
             "email": "peeter.tomberg@gmail.com"
         }
     ],
+    "autoload": {
+        "psr-0": {
+            "OpusOnline\\Loggly\\": "Loggly/"
+        }
+    },
     "require": {
         "php": ">=5.2.0",
         "ext-curl": "*"
