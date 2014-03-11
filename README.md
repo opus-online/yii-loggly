@@ -10,24 +10,25 @@ This module is a log writer for [Yii](http://www.yiiframework.com/) that will se
 
 ### Usage
 
-Decompress put Loggly folder on protected/extensions/
-In protected/config/main.php in components section add:
+Install using composer ( https://packagist.org/packages/opus-online/yii-loggly )
+
+At the head of protected/config/main.php add:
+
+Yii::setPathOfAlias('OpusOnline.Loggly', dirname(__FILE__) . '/../vendors/opus-online/yii-loggly');
+
+In the components section add:
 
 ```php
     'log' => array(
         'class' => 'CLogRouter',
         'routes' => array(
-                array(
-                    'class'=>'ext.Loggly.LogglyRoute',
-                    'inputKey' => '<put here your input key>',
-                    'finishRequest' => true,
-                    'levels'=>'error, warning',
-                    'tag' => 'staging,php'
-                ),
+            array(
+                'class'=> '\OpusOnline\Loggly\Route',
+                'inputKey' => '<KEY>',
+                'finishRequest' => true,
+                'levels'=> 'error, warning, info',
+                'tag' => 'staging,php'
+            ),
         ),
     ),
 ```
-
-### Resources
-
- - (GitHub repo)[https://github.com/aotd1/yii-loggly]
