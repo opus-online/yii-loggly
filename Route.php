@@ -60,7 +60,7 @@ class Route extends \CLogRoute
     {
 
         $url = $this->url . $this->inputKey;
-        if($this->tag) {
+        if ($this->tag) {
             $url .= '/tag/' . $this->tag . '/';
         }
         return $url;
